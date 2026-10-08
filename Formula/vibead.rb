@@ -63,7 +63,8 @@ class Vibead < Formula
     assert_match "--test-publisher", shell_output("#{bin}/vibead-beta --help")
     assert_predicate libexec/"runtime/node", :executable?
     assert_path_exists libexec/"runtime/renderer.node"
-    assert_path_exists libexec/"cli/node_modules/node-pty/build/Release/pty.node"
+    system libexec/"runtime/node", "-e", "require(process.argv[1]); require(process.argv[2])",
+           libexec/"cli/node_modules/node-pty", libexec/"runtime/renderer.node"
     manifest = JSON.parse((libexec/"manifest.json").read)
     manifest.fetch("files").each do |file, checksum|
       assert_equal checksum, Digest::SHA256.file(libexec/file).hexdigest, "#{file} changed during installation"
