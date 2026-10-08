@@ -17,8 +17,10 @@ class Vibead < Formula
 
   on_linux do
     depends_on arch: :x86_64
-    url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.12/vibead-beta-0.1.0-beta.12-linux-x64.tar.gz"
-    sha256 "940af00180c3534447a480aae1816b7da7f1b865cec73b4904f5a3b984737571"
+    on_intel do
+      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.12/vibead-beta-0.1.0-beta.12-linux-x64.tar.gz"
+      sha256 "940af00180c3534447a480aae1816b7da7f1b865cec73b4904f5a3b984737571"
+    end
   end
 
   # Preserve the signed executables, native modules and their relative paths.
@@ -60,8 +62,8 @@ class Vibead < Formula
     assert_match "Vibead standalone beta", shell_output("#{bin}/vibead --help")
     assert_match "--test-publisher", shell_output("#{bin}/vibead-beta --help")
     assert_predicate libexec/"runtime/node", :executable?
-    assert_predicate libexec/"runtime/renderer.node", :exist?
-    assert_predicate libexec/"cli/node_modules/node-pty/build/Release/pty.node", :exist?
+    assert_path_exists libexec/"runtime/renderer.node"
+    assert_path_exists libexec/"cli/node_modules/node-pty/build/Release/pty.node"
     manifest = JSON.parse((libexec/"manifest.json").read)
     manifest.fetch("files").each do |file, checksum|
       assert_equal checksum, Digest::SHA256.file(libexec/file).hexdigest, "#{file} changed during installation"
