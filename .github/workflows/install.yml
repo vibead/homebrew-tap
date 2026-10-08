@@ -21,13 +21,11 @@ jobs:
       HOMEBREW_NO_ANALYTICS: "1"
       HOMEBREW_NO_AUTO_UPDATE: "1"
     steps:
-      - uses: actions/checkout@v4
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@main
       - name: Install the formula from this revision
         shell: bash
         run: |
-          brew tap vibead/tap "$GITHUB_WORKSPACE"
           brew install vibead/tap/vibead
           brew test vibead/tap/vibead
           vibead --version
