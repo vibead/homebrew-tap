@@ -1,28 +1,25 @@
 class Vibead < Formula
   desc "Try test ads and publisher messages in AI coding agents"
   homepage "https://github.com/vibead/cli"
-  version "0.1.0-beta.13"
+  version "0.1.0-beta.15"
   license :cannot_represent
 
-  # DO NOT MERGE as-is: beta.13 has no macOS archives yet (built on Linux only).
-  # macOS still points at beta.12 archives, so `vibead --version` would
-  # misreport 0.1.0-beta.13 on Mac. Add darwin-arm64/x64 beta.13 URLs/shas first.
   on_macos do
     on_arm do
-      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.12/vibead-beta-0.1.0-beta.12-darwin-arm64.tar.gz"
-      sha256 "389e6591444c4fe4a0e0de97389ce7d27eb2401a8b5d232f3a15f00a72ade8a4"
+      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.15/vibead-beta-0.1.0-beta.15-darwin-arm64.tar.gz"
+      sha256 "3ee636753a530ad9db781863410043c04a180ab1f143be059be2232b8a91992b"
     end
     on_intel do
-      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.12/vibead-beta-0.1.0-beta.12-darwin-x64.tar.gz"
-      sha256 "ae0dbfce66e971f04813d39d597541caa542fbad84ec2d07b41760822bcf4b0d"
+      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.15/vibead-beta-0.1.0-beta.15-darwin-x64.tar.gz"
+      sha256 "d108f504e7fd2f5360fc236d46fd0342883e00572e3733a706993c45215db283"
     end
   end
 
   on_linux do
     depends_on arch: :x86_64
     on_intel do
-      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.13/vibead-beta-0.1.0-beta.13-linux-x64.tar.gz"
-      sha256 "0f96915dcab299f7c20df4c8c71a96a93b03d4c248cccb0ee4c1c2f73315b70d"
+      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.15/vibead-beta-0.1.0-beta.15-linux-x64.tar.gz"
+      sha256 "c04df0b15bfe5e3f2f50c7a5d671b19ff28b85134e4a5688566e6ea760cdbf2a"
     end
   end
 
