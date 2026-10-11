@@ -1,24 +1,21 @@
 class Vibead < Formula
   desc "Try test ads and publisher messages in AI coding agents"
   homepage "https://github.com/vibead/cli"
+  version "0.1.0-beta.17"
   license :cannot_represent
 
   on_macos do
-    # macOS beta.17 builds are pending (the one allowed CI run failed on a test
-    # flake); Macs stay on beta.16 until they are qualified.
-    version "0.1.0-beta.16"
     on_arm do
-      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.16/vibead-beta-0.1.0-beta.16-darwin-arm64.tar.gz"
-      sha256 "284921e86313a6500738b5938ed7a78d8b134f824335bd8babf73bd893678763"
+      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.17/vibead-beta-0.1.0-beta.17-darwin-arm64.tar.gz"
+      sha256 "3b1957765f829b71be75e19b0005d5781605384a66da99f6b2b01908a3481a37"
     end
     on_intel do
-      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.16/vibead-beta-0.1.0-beta.16-darwin-x64.tar.gz"
-      sha256 "3bcea6a13bc078a5a12625249b6819e9978e529c7e02415221371bb5b8d16bb9"
+      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.17/vibead-beta-0.1.0-beta.17-darwin-x64.tar.gz"
+      sha256 "4af21efd847a7a59db16e2bed68392ba4d4155ff9ebac651707f2c79a49b63b5"
     end
   end
 
   on_linux do
-    version "0.1.0-beta.17"
     depends_on arch: :x86_64
     on_intel do
       url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.17/vibead-beta-0.1.0-beta.17-linux-x64.tar.gz"
