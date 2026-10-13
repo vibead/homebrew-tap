@@ -45,14 +45,12 @@ class Vibead < Formula
 
   def caveats
     <<~EOS
-      Start from a project where your agent already works:
-        vibead claude
-        vibead codex
-        vibead gemini
-        vibead opencode
+      Show ads in plain claude and opencode (asks before changing anything):
+        vibead enable
+      Codex is opt-in: accept the alias vibead enable offers, or run vibead codex.
+      Turn off with: vibead disable
 
-      This beta uses simulated ads and generates no earnings or credits.
-      Your normal AI provider charges still apply.
+      Payouts launching soon. Your normal AI provider charges still apply.
       Guide: https://github.com/vibead/cli
     EOS
   end
