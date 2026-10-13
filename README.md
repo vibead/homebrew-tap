@@ -1,36 +1,35 @@
-# VibeAd for Homebrew
+<h1 align="center">VibeAd for Homebrew</h1>
 
-**Your AI agent thinks. You get paid.**
+<p align="center"><b>Your AI agent thinks. You get paid.</b></p>
 
-```sh
-brew install vibead/tap/vibead && vibead enable
-```
+<p align="center">
+<a href="https://www.vibead.ai">Website</a> · <a href="https://github.com/vibead/cli">Guide</a> · <a href="https://github.com/vibead/cli/releases/latest">Latest release</a> · <a href="https://github.com/vibead/cli/issues/new">Report a problem</a>
+</p>
 
-**Use:** run `claude`, `codex` or `opencode` as usual. Codex is opt-in: accept the `codex` alias when `vibead enable` offers it, or run `vibead codex`.
-
-**Turn off**
+## Quick start
 
 ```sh
-vibead disable
+brew install vibead/tap/vibead && vibead enable   # install, then review and approve the changes
+claude                                            # or opencode: use your agent as usual
+vibead disable                                    # turn ads off and restore your settings
 ```
+
+**Codex** is opt-in: accept the `codex` alias that `vibead enable` offers, or run `vibead codex`.
 
 VibeAd never reads or changes your prompts, code or agent output. Payouts launching soon.
 
-**Update**
+## Update and uninstall
 
 ```sh
-brew update && brew upgrade vibead/tap/vibead
+brew update && brew upgrade vibead/tap/vibead                          # update
+vibead uninstall && brew uninstall vibead && brew untap vibead/tap     # remove everything
 ```
 
-**Uninstall**
+## Requirements
 
-```sh
-vibead uninstall && brew uninstall vibead && brew untap vibead/tap
-```
-
-**Requirements:** macOS (Apple Silicon or Intel) or Linux x64 with glibc 2.34+, and Claude Code, Codex or OpenCode already working. No Node.js needed.
-
-[Latest release](https://github.com/vibead/cli/releases/latest) · [Guide](https://github.com/vibead/cli) · [Report a problem](https://github.com/vibead/cli/issues/new)
+- macOS (Apple Silicon or Intel), or Linux x64 with glibc 2.34+
+- Claude Code, Codex or OpenCode already working in your terminal
+- No Node.js needed: the formula includes its own runtime
 
 ---
 
