@@ -6,6 +6,8 @@
 <a href="https://www.vibead.ai">Website</a> · <a href="https://github.com/vibead/cli">Guide</a> · <a href="https://github.com/vibead/cli/releases/latest">Latest release</a> · <a href="https://github.com/vibead/cli/issues/new">Report a problem</a>
 </p>
 
+<p align="center"><img src="https://raw.githubusercontent.com/vibead/cli/main/docs/readme-ad-claude.gif" alt="Real capture: Claude Code showing a labelled [Ad] line while it thinks" width="100%"><br><sub>Real capture: Claude Code</sub></p>
+
 ## Quick start
 
 ```sh
