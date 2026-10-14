@@ -1,64 +1,62 @@
-# Vibead for Homebrew
+<h1 align="center">VibeAd for Homebrew</h1>
 
-Install [Vibead](https://github.com/vibead/cli) with Homebrew on **Mac (Apple Silicon or Intel)** or **Linux x64**. No Homebrew account, npm installation or separate Node.js installation is needed.
+<p align="center"><b>Your AI agent thinks. You get paid.</b></p>
 
-## Install and start
+<p align="center">
+<a href="https://www.vibead.ai">Website</a> · <a href="https://github.com/vibead/cli">Guide</a> · <a href="https://github.com/vibead/cli/releases/latest">Latest release</a> · <a href="https://github.com/vibead/cli/issues/new">Report a problem</a>
+</p>
 
-With [Homebrew](https://brew.sh) installed, run:
+<p align="center"><img src="https://raw.githubusercontent.com/vibead/cli/main/docs/readme-ad-claude.gif" alt="Real capture: Claude Code showing a labelled [Ad] line while it thinks" width="100%"><br><sub>Real capture: Claude Code</sub></p>
 
-```sh
-brew install vibead/tap/vibead
-```
-
-Then open a project where your AI coding agent already works and choose one command:
-
-| Your agent | Run |
-| --- | --- |
-| Claude Code | `vibead claude` |
-| Codex | `vibead codex` |
-| Gemini CLI | `vibead gemini` |
-| OpenCode | `vibead opencode` |
-
-Send a prompt and look for a message marked `[Ad]` while the agent thinks. Very short turns may finish before an ad appears. Your normal agent login, settings, project and provider charges stay in use. Exit your agent normally when done.
-
-This is **beta.12**: ads are simulated and generate no earnings or credits. To test a publisher message instead, run `vibead claude --test-publisher` and follow the [publisher guide](https://github.com/vibead/cli/blob/main/ENTERPRISE-DEMO.md).
-
-## Check, update or remove
+## Quick start
 
 ```sh
-vibead --version
-vibead --help
+brew install vibead/tap/vibead && vibead enable   # install, then review and approve the changes
+claude                                            # or opencode: use your agent as usual
+vibead disable                                    # turn ads off and restore your settings
 ```
 
-To update:
+**Codex** is opt-in: accept the `codex` alias that `vibead enable` offers, or run `vibead codex`.
+
+VibeAd never reads or changes your prompts, code or agent output. Payouts launching soon.
+
+## Update and uninstall
 
 ```sh
-brew update
-brew upgrade vibead/tap/vibead
+brew update && brew upgrade vibead/tap/vibead                          # update
+vibead uninstall && brew uninstall vibead && brew untap vibead/tap     # remove everything
 ```
 
-To remove, first exit any running Vibead sessions:
+## Requirements
 
-```sh
-brew uninstall vibead
-brew untap vibead/tap
-```
+- macOS (Apple Silicon or Intel), or Linux x64 with glibc 2.34+
+- Claude Code, Codex or OpenCode already working in your terminal
+- No Node.js needed: the formula includes its own runtime
 
-Session reports under `~/.vibead-beta/results` remain after uninstalling.
+---
 
-## Requirements and help
+<details>
+<summary><b>What <code>vibead enable</code> changes</b></summary>
 
-- Your chosen coding agent must already be installed and working.
-- Linux requires **x64 and glibc 2.34+**. Windows, Linux ARM64 and Alpine/musl are not supported by this release.
-- Mac archives are ad hoc signed, without Apple notarization. Physical Mac terminal acceptance remains pending; Homebrew installation tests do not certify the interactive display.
-- OpenCode has a known issue where ads can be missing on later turns.
-- Installation downloads the complete official release archive (about 72–84 MB), verifies its SHA-256 checksum, and keeps the bundled runtime together.
-- If you already installed Vibead globally through npm, exit its sessions and run `npm uninstall -g @vibead/cli` before switching to Homebrew. This avoids two installations providing the same command.
+It lists every file it will change and asks first (`--dry-run` previews only). Ads are labelled `[Ad]` and appear only in status or notification UI. `vibead disable` restores your files exactly.
+</details>
 
-[Read the beta guide](https://github.com/vibead/cli/blob/main/BETA.md) · [Report a problem](https://github.com/vibead/cli/issues/new) · [Release notes and downloads](https://github.com/vibead/cli/releases/tag/v0.1.0-beta.12)
+<details>
+<summary><b>Switching from npm</b></summary>
 
-## Maintaining this tap
+Run `vibead disable` and `npm uninstall -g @vibead/cli` first, so two installs don't provide the same command.
+</details>
 
-The formula installs the published archives from `vibead/cli`; it does not rebuild or relicense them. Update the version, platform URLs and SHA-256 values together for a new release. Keep the complete kit in `libexec` so its native modules and runtime remain available.
+<details>
+<summary><b>More details</b></summary>
 
-The install workflow checks Linux x64, Mac Apple Silicon and Mac Intel. It tests the command entry points and required runtime files. It does not launch paid model sessions.
+- The formula downloads the official release archive from `vibead/cli`, verifies its SHA-256 and keeps the bundled runtime together.
+- macOS builds are ad hoc signed, not Apple-notarized.
+- Windows, Linux ARM64 and Alpine/musl are not supported.
+</details>
+
+<details>
+<summary><b>Maintaining this tap</b></summary>
+
+Update the version, platform URLs and SHA-256 values together for each release. Keep the complete kit in `libexec`. The install workflow checks Linux x64, Mac Apple Silicon and Mac Intel; it does not launch model sessions.
+</details>
