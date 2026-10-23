@@ -1,5 +1,5 @@
 class Vibead < Formula
-  desc "Try test ads and publisher messages in AI coding agents"
+  desc "Clearly labelled sponsored lines while your AI agent works"
   homepage "https://github.com/vibead/cli"
   version "0.1.0-beta.33"
   license :cannot_represent
