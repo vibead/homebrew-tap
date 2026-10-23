@@ -51,7 +51,9 @@ class Vibead < Formula
         vibead gemini
         vibead opencode
 
-      This beta uses simulated ads and generates no earnings or credits.
+      VibeAd shows a short sponsored line, labelled [Ad], in your agent's
+      status area while it works. It does not read or change your prompts,
+      code or replies. Turn it off at any time with: vibead disable
       Your normal AI provider charges still apply.
       Guide: https://github.com/vibead/cli
     EOS
