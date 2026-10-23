@@ -1,25 +1,25 @@
 class Vibead < Formula
   desc "Try test ads and publisher messages in AI coding agents"
   homepage "https://github.com/vibead/cli"
-  version "0.1.0-beta.25"
+  version "0.1.0-beta.33"
   license :cannot_represent
 
   on_macos do
     on_arm do
-      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.25/vibead-beta-0.1.0-beta.25-darwin-arm64.tar.gz"
-      sha256 "49ef5e57623b3710e52ef159c82e0f7c29bbfbe481de5aa6fd4fa5f2fb7d4c07"
+      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.33/vibead-beta-0.1.0-beta.33-darwin-arm64.tar.gz"
+      sha256 "49660dfa20b8a243aa787475e4f7b980a5137e02c6beef43119dbcaedbe002fc"
     end
     on_intel do
-      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.25/vibead-beta-0.1.0-beta.25-darwin-x64.tar.gz"
-      sha256 "3efd2d0eb8f71d0305c8c1421005de50d2ecb25412ed731d859ca29fc43937be"
+      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.33/vibead-beta-0.1.0-beta.33-darwin-x64.tar.gz"
+      sha256 "7d5e7a60c57e74fdc5f0653eb0ce9c90f2e2fc54dd0af11fd41b4fc1171cc237"
     end
   end
 
   on_linux do
     depends_on arch: :x86_64
     on_intel do
-      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.25/vibead-beta-0.1.0-beta.25-linux-x64.tar.gz"
-      sha256 "267cd47a7a8aab34003b4c945530688c0e394babe72de7c6b652ad238424f185"
+      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.33/vibead-beta-0.1.0-beta.33-linux-x64.tar.gz"
+      sha256 "57cea0ceccb054f1fa3bbfedddf844a00555e845b110a263fd53da397cf164a5"
     end
   end
 
