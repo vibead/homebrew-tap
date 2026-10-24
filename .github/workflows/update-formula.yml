@@ -1,0 +1,48 @@
+name: Update formula
+
+# Keeps Formula/vibead.rb on the version npm serves as `latest` for @vibead/cli.
+# No secrets: public reads, and the default GITHUB_TOKEN for this repo only.
+# Does nothing (no commit) when the formula is already current.
+on:
+  schedule:
+    - cron: "7,37 * * * *"
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/update-formula.yml
+      - scripts/update-formula.sh
+
+permissions:
+  contents: read
+
+concurrency:
+  group: update-formula
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write # push the bump to main
+      actions: write # start the install check, which a bot push does not trigger
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Regenerate the formula from npm latest
+        id: gen
+        run: |
+          set -euo pipefail
+          out=$(scripts/update-formula.sh)
+          echo "$out"
+          git diff --quiet && echo "changed=false" >> "$GITHUB_OUTPUT" || { echo "changed=true" >> "$GITHUB_OUTPUT"; echo "version=$out" >> "$GITHUB_OUTPUT"; git diff --stat; }
+      - name: Commit and push (main only, only when the version changed)
+        if: github.ref == 'refs/heads/main' && steps.gen.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.gen.outputs.version }}
+        run: |
+          set -euo pipefail
+          # Author and committer are the Actions bot, never a person's address.
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -am "vibead $VERSION"
+          git push origin HEAD:main
+          gh workflow run install.yml --ref main

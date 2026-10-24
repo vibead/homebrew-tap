@@ -58,5 +58,5 @@ Run `vibead disable` and `npm uninstall -g @vibead/cli` first, so two installs d
 <details>
 <summary><b>Maintaining this tap</b></summary>
 
-Update the version, platform URLs and SHA-256 values together for each release. Keep the complete kit in `libexec`. The install workflow checks Linux x64, Mac Apple Silicon and Mac Intel; it does not launch model sessions.
+The `Update formula` workflow checks npm `latest` for `@vibead/cli` every 30 minutes and updates the version, platform URLs and SHA-256 values together (no token, no hand step; run it from the Actions tab to update at once). It stops unless npm's tarball and the release's `SHA256SUMS` agree. Keep the complete kit in `libexec`. The install workflow checks Linux x64, Mac Apple Silicon and Mac Intel; it does not launch model sessions.
 </details>
