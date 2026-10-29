@@ -47,10 +47,12 @@ class Vibead < Formula
       Run vibead once to connect Claude Code, Codex and OpenCode:
         vibead
       It prints what it changed. Then start your agent as usual.
+      Codex: open a new terminal. Codex will ask you to trust VibeAd's
+      hooks; choose Trust.
 
-      VibeAd shows a short sponsored line, labelled [Ad], in your agent's
-      status area while it works. It does not read or change your prompts,
-      code or replies.
+      VibeAd shows a short sponsored line, labelled [Ad], in the agent's
+      status line, working indicator or notification area while it works.
+      It does not read or change your prompts, code or replies.
       Turn it off at any time with: vibead disable
       Remove it with: vibead uninstall && brew uninstall vibead
       Your normal AI provider charges still apply.
