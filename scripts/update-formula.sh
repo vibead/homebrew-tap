@@ -5,13 +5,15 @@
 #   1. npm's tarball for that version matches npm's dist.integrity (SHA-512), and
 #   2. the SHA-256 of each platform archive in the tarball's releases.json equals
 #      the one in the public GitHub Release's SHA256SUMS.
-# Usage: scripts/update-formula.sh [Formula/vibead.rb]   (prints the new version when changed)
+# Usage: [VIBEAD_TAP_VERSION=X] scripts/update-formula.sh [Formula/vibead.rb]   (prints the new version when changed)
 set -euo pipefail
 f=${1:-Formula/vibead.rb}
 pkg='@vibead/cli'
 platforms='darwin-arm64 darwin-x64 linux-x64'
 
-version=$(npm view "$pkg" dist-tags.latest)
+# VIBEAD_TAP_VERSION pins a version that is not (yet) npm `latest`, e.g. a `next`
+# release the tap must ship; the same npm and SHA256SUMS checks apply.
+version=${VIBEAD_TAP_VERSION:-$(npm view "$pkg" dist-tags.latest)}
 [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?$ ]] || { echo "bad npm latest version: $version" >&2; exit 1; }
 old=$(sed -nE 's/^  version "([^"]+)"$/\1/p' "$f")
 [ -n "$old" ] || { echo "no version line in $f" >&2; exit 1; }

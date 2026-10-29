@@ -11,12 +11,12 @@
 ## Quick start
 
 ```sh
-brew install vibead/tap/vibead && vibead enable   # install, then review and approve the changes
-claude                                            # or opencode: use your agent as usual
+brew install vibead/tap/vibead && vibead          # install, then connect the agents on this computer
+claude                                            # or codex, opencode: use your agent as usual
 vibead disable                                    # turn ads off and restore your settings
 ```
 
-**Codex** is opt-in: accept the `codex` alias that `vibead enable` offers, or run `vibead codex`.
+**Codex** gets a `codex` shell function that runs `vibead codex`; `vibead disable` removes it. Open a new terminal after the first `vibead` run; Codex asks once whether to trust VibeAd's hooks, and ads show after you choose Trust.
 
 VibeAd never reads or changes your prompts, code or agent output. Payouts launching soon.
 
@@ -36,9 +36,9 @@ vibead uninstall && brew uninstall vibead && brew untap vibead/tap     # remove 
 ---
 
 <details>
-<summary><b>What <code>vibead enable</code> changes</b></summary>
+<summary><b>What the first <code>vibead</code> run (or <code>vibead enable</code>) changes</b></summary>
 
-It lists every file it will change and asks first (`--dry-run` previews only). Ads are labelled `[Ad]` and appear only in status or notification UI. `vibead disable` restores your files exactly.
+The first `vibead` run connects the agents it finds, without a question, and prints what it did. `vibead enable` (to turn ads back on after `vibead disable`) lists every file it will change and asks first (`--dry-run` previews only). Ads are labelled `[Ad]` and appear only in status or notification UI. `vibead disable` restores your files exactly.
 </details>
 
 <details>
