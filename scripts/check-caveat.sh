@@ -21,8 +21,11 @@ old=$(git ls-files -z | grep -zv '^scripts/check-caveat.sh$' | xargs -0 grep -nH
 meaning() { perl -0777 -ne 'my $t = lc $_; $t =~ s/\xe2\x80[\x98\x99\x9c\x9d]|[*_`"\x27]//g; $t =~ s/\s+/ /g;
   while ($t =~ /(?:^|[.;:!?(] ?|\bthen |\band )(?:choose|select|pick|press|click|hit) +(?:the +)?trust(?! +all)(?![\w-])/g) { print "$ARGV: ", substr($t, $-[0] > 50 ? $-[0] - 50 : 0, 80), "\n" }' "$@"; }
 sample=$(mktemp); trap 'rm -f "$sample"' EXIT
-printf '%s\n' "Codex will ask you to trust VibeAd's hooks. Choose Trust." > "$sample"; [ -n "$(meaning "$sample")" ] || { echo "caveat: the meaning check misses a reworded old line"; exit 1; }
-printf '%s\n' "$approved" 'Choose "Trust all and continue" to see ads.' > "$sample"; [ -z "$(meaning "$sample")" ] || { echo "caveat: the meaning check flags the approved copy"; exit 1; }
-old=$(git ls-files | grep -v '^scripts/check-caveat.sh$' | while IFS= read -r f; do grep -qI . "$f" 2>/dev/null && meaning "$f"; done || true)
+# scan: the repo loop below, run on the self-test samples too (RC3b mutant o4: a loop that skips
+# the meaning check now fails the self-test).
+scan() { while IFS= read -r f; do if grep -qI . "$f" 2>/dev/null; then meaning "$f"; fi; done; }
+printf '%s\n' "Codex will ask you to trust VibeAd's hooks. Choose Trust." > "$sample"; [ -n "$(printf '%s\n' "$sample" | scan)" ] || { echo "caveat: the meaning check misses a reworded old line"; exit 1; }
+printf '%s\n' "$approved" 'Choose "Trust all and continue" to see ads.' > "$sample"; [ -z "$(printf '%s\n' "$sample" | scan)" ] || { echo "caveat: the meaning check flags the approved copy"; exit 1; }
+old=$(git ls-files | grep -v '^scripts/check-caveat.sh$' | scan || true)
 [ -z "$old" ] || { echo "caveat: the old trust line is back (reworded):"; echo "$old"; exit 1; }
 echo "ok: the Formula caveat and README carry the approved Codex sentence; the old line, in any wording, is in no tracked file"
