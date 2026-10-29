@@ -18,7 +18,7 @@ vibead disable                                    # turn ads off and restore you
 
 **Codex** gets a `codex` shell function that runs `vibead codex`; `vibead disable` removes it. Open a new terminal after the first `vibead` run; Codex asks once whether to trust VibeAd's hooks, and ads show after you choose Trust.
 
-VibeAd never reads or changes your prompts, code or agent output. Payouts launching soon.
+VibeAd never reads or changes your prompts, code or agent output.
 
 ## Update and uninstall
 
