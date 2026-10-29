@@ -1,0 +1,22 @@
+name: Formula check
+
+# beta.36 RC2 (T1): fails until Formula/vibead.rb ships the version named on its
+# caveats-for line, so new caveats never merge on an old version. Offline, no secrets.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Formula ships its caveats-for version; no Gemini or Windows text
+        run: scripts/check-formula.sh
+      - name: Forward-only and caveats-for guards (offline)
+        run: scripts/test-update-formula.sh

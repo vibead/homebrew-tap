@@ -28,6 +28,14 @@ if [ "$(semver_cmp "$version" "$old")" != 1 ]; then
   echo "tap stays at $old: npm latest $version is not newer"; exit 0
 fi
 
+# Caveats follow the version (beta.36 RC2, T1): the formula names the version its
+# caveats and brew test were written for; never move past it with older copy.
+caveats_for=$(sed -nE 's/^  # caveats-for: ([^ ]+)$/\1/p' "$f")
+[ -n "$caveats_for" ] || { echo "no caveats-for line in $f" >&2; exit 1; }
+if [ "$(semver_cmp "$version" "$caveats_for")" = 1 ]; then
+  echo "refusing $version: the caveats in $f were written for $caveats_for; update them and the caveats-for line in a tap PR first" >&2; exit 1
+fi
+
 tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
 have=$(npm view "$pkg@$version" dist.integrity)
 tarball=$(npm view "$pkg@$version" dist.tarball)
@@ -40,7 +48,7 @@ tar -xOzf "$tmp/cli.tgz" package/releases.json > "$tmp/releases.json"
 curl -fsSL --retry 3 -o "$tmp/SHA256SUMS" "https://github.com/vibead/cli/releases/download/v$version/SHA256SUMS"
 
 cp "$f" "$tmp/new.rb"
-sed -i "s/${old//./\\.}/$version/g" "$tmp/new.rb"
+sed -i "/caveats-for:/!s/${old//./\\.}/$version/g" "$tmp/new.rb"
 for p in $platforms; do
   npm_sum=$(jq -r --arg p "$p" '.platforms[$p] // empty' "$tmp/releases.json")
   rel_sum=$(awk -v n="vibead-beta-$version-$p.tar.gz" '$2 == n {print $1}' "$tmp/SHA256SUMS")

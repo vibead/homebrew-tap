@@ -2,6 +2,10 @@ class Vibead < Formula
   desc "Clearly labelled sponsored lines while your AI agent works"
   homepage "https://github.com/vibead/cli"
   version "0.1.0-beta.34"
+  # caveats-for: 0.1.0-beta.36
+  # The caveats and brew test below were written for that version. update-formula.sh
+  # never moves the formula past it, and the "Formula check" workflow stays red until
+  # the formula ships it: change the caveats in a reviewed tap PR, then this line.
   license :cannot_represent
 
   on_macos do
@@ -62,8 +66,10 @@ class Vibead < Formula
 
   test do
     assert_equal version.to_s, shell_output("#{bin}/vibead --version").strip
-    assert_match "VibeAd shows one labelled [Ad] line", shell_output("#{bin}/vibead --help")
-    assert_match "vibead uninstall", shell_output("#{bin}/vibead --help")
+    help = shell_output("#{bin}/vibead --help")
+    assert_match "labelled [Ad]", help
+    assert_match "vibead uninstall", help
+    refute_match(/gemini|Vibead standalone beta/i, help)
     refute_path_exists bin/"vibead-beta"
     assert_predicate libexec/"runtime/node", :executable?
     assert_path_exists libexec/"runtime/renderer.node"

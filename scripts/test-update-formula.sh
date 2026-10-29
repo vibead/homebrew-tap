@@ -49,8 +49,22 @@ run 0.1.0-beta.40 VIBEAD_TAP_VERSION=0.1.0-beta.35
 expect "$code" 1 "pinned older version: exit 1"
 expect "$out" "refusing to move the tap back from 0.1.0-beta.36 to 0.1.0-beta.35" "pinned older version: refused"
 expect "$(sha256sum "$tmp/vibead.rb")" "$before" "pinned older version: formula unchanged"
-# A newer version gets past the guard (the next step is the npm tarball read, which the stub refuses).
+# Past the caveats-for version (0.1.0-beta.36): refused offline, from the cron or a pin.
 run 0.1.0-beta.37
-expect "$(grep -c 'unexpected npm view @vibead/cli@0.1.0-beta.37 dist.integrity' <<< "$out")" 1 "newer version passes the guard"
-expect "$(sha256sum "$tmp/vibead.rb")" "$before" "newer version, failed check: formula unchanged"
+expect "$code" 1 "newer than caveats-for: exit 1"
+expect "$out" "refusing 0.1.0-beta.37: the caveats in $tmp/vibead.rb were written for 0.1.0-beta.36; update them and the caveats-for line in a tap PR first" "newer than caveats-for: refused"
+expect "$(sha256sum "$tmp/vibead.rb")" "$before" "newer than caveats-for: formula unchanged"
+run 0.1.0-beta.34 VIBEAD_TAP_VERSION=0.1.0-beta.37
+expect "$code" 1 "pinned past caveats-for: exit 1"
+# A newer version up to caveats-for gets past both guards (the next step is the npm
+# tarball read, which the stub refuses).
+sed -i 's/^  version "[^"]*"$/  version "0.1.0-beta.35"/' "$tmp/vibead.rb"; before35=$(sha256sum "$tmp/vibead.rb")
+run 0.1.0-beta.36
+expect "$(grep -c 'unexpected npm view @vibead/cli@0.1.0-beta.36 dist.integrity' <<< "$out")" 1 "newer version up to caveats-for passes the guards"
+expect "$(sha256sum "$tmp/vibead.rb")" "$before35" "newer version, failed check: formula unchanged"
+# The version rewrite leaves the caveats-for line alone.
+printf '  version "0.1.0-beta.35"\n  # caveats-for: 0.1.0-beta.36\n  url "x/v0.1.0-beta.35/y"\n' > "$tmp/r.rb"
+sed "/caveats-for:/!s/0\.1\.0-beta\.35/0.1.0-beta.36/g" "$tmp/r.rb" > "$tmp/r2.rb"
+expect "$(grep -c 'caveats-for: 0.1.0-beta.36' "$tmp/r2.rb")$(grep -c 'beta.35' "$tmp/r2.rb")" "10" "version rewrite skips caveats-for"
+grep -q '/caveats-for:/!s/' "$here/update-formula.sh" || { echo "FAIL update-formula.sh rewrites the caveats-for line"; fail=1; }
 [ "$fail" = 0 ] && echo "all passed" || { echo "some checks failed"; exit 1; }
