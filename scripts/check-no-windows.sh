@@ -2,8 +2,9 @@
 # beta.36 RC3 (W1, approved by Nina, delegated wording owner (Gaurav, Oct 29 2026), 02:29
 # AEDT Oct 30): VibeAd does not support Windows, so no shipped file and no README may point
 # anyone at a Windows install: irm, iex, iwr, Invoke-Expression/RestMethod/WebRequest, a
-# .ps1 download URL, or winget/scoop/choco install, any case. Scans every tracked file
-# except .github/ and this script. The same patterns as vibead/cli
+# .ps1 download URL, or winget/scoop/choco install, any case. Scans every tracked text
+# file, .github/ included (RC3 QA, 03:48 AEDT Oct 30); the allow-list is this script only,
+# whose self-test spells the forms out. The same patterns as vibead/cli
 # install/test/no-windows-pointer.test.mjs. Offline, no secrets.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -20,9 +21,9 @@ printf '%s\n' 'vibead: Windows is not supported yet.' 'www.vibead.ai/install.ps1
 
 files=()
 while IFS= read -r -d '' f; do
-  case "$f" in .github/*|scripts/check-no-windows.sh) ;; *) files+=("$f") ;; esac
+  case "$f" in scripts/check-no-windows.sh) ;; *) files+=("$f") ;; esac
 done < <(git ls-files -z)
-for must in README.md Formula/vibead.rb; do
+for must in README.md Formula/vibead.rb .github/workflows/docs-guard.yml scripts/update-formula.sh; do
   printf '%s\n' "${files[@]}" | grep -qx "$must" || { echo "scan misses $must"; exit 1; }
 done
 hits=$(scan "${files[@]}")

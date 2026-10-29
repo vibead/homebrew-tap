@@ -21,7 +21,7 @@ jobs:
           persist-credentials: false
       - name: No PENDING NINA, PENDING or TODO(nina) marker in shipped files
         run: scripts/check-no-pending.sh
-      # beta.36 RC3 (W1): no Windows install pointer (irm, iex, iwr, Invoke-*, .ps1 URL,
-      # winget/scoop/choco) in any shipped file or README, any case.
+      # beta.36 RC3 (W1): no Windows install pointer (the forms are listed in
+      # scripts/check-no-windows.sh) in any tracked text file, any case.
       - name: No Windows install pointer in shipped files
         run: scripts/check-no-windows.sh
