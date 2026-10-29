@@ -1,0 +1,23 @@
+name: Shipped docs guard
+
+# beta.36 RC2: fails if an unapproved-wording marker (PENDING NINA, PENDING, TODO(nina))
+# is in any shipped file. Separate from Formula check so it stays readable while that
+# check is red by design. Offline, no secrets.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  markers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: No PENDING NINA, PENDING or TODO(nina) marker in shipped files
+        run: scripts/check-no-pending.sh
