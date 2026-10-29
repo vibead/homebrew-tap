@@ -2,6 +2,10 @@ class Vibead < Formula
   desc "Clearly labelled sponsored lines while your AI agent works"
   homepage "https://github.com/vibead/cli"
   version "0.1.0-beta.34"
+  # caveats-for: 0.1.0-beta.36
+  # The caveats and brew test below were written for that version. update-formula.sh
+  # never moves the formula past it, and the "Formula check" workflow stays red until
+  # the formula ships it: change the caveats in a reviewed tap PR, then this line.
   license :cannot_represent
 
   on_macos do
@@ -28,7 +32,7 @@ class Vibead < Formula
 
   def install
     if OS.linux? && Version.new(Utils.safe_popen_read("getconf", "GNU_LIBC_VERSION").split.last) < Version.new("2.34")
-      odie "Vibead requires Linux x64 with glibc 2.34 or newer."
+      odie "VibeAd requires Linux x64 with glibc 2.34 or newer."
     end
 
     libexec.install Dir["*"]
@@ -40,20 +44,21 @@ class Vibead < Formula
       fi
       exec "#{libexec}/vibead-beta" "$@"
     EOS
-    bin.install_symlink bin/"vibead" => "vibead-beta"
   end
 
   def caveats
     <<~EOS
-      Start from a project where your agent already works:
-        vibead claude
-        vibead codex
-        vibead gemini
-        vibead opencode
+      Run vibead once to connect Claude Code, Codex and OpenCode:
+        vibead
+      It prints what it changed. Then start your agent as usual.
+      Codex: open a new terminal.
+      Codex asks you to trust VibeAd's hooks; ads show after you choose Trust. It asks again each time you turn VibeAd off and back on.
 
-      VibeAd shows a short sponsored line, labelled [Ad], in your agent's
-      status area while it works. It does not read or change your prompts,
-      code or replies. Turn it off at any time with: vibead disable
+      VibeAd shows a short sponsored line, labelled [Ad], in the agent's
+      status line, working indicator or notification area while it works.
+      It does not read or change your prompts, code or replies.
+      Turn it off at any time with: vibead disable
+      Remove it with: vibead uninstall && brew uninstall vibead
       Your normal AI provider charges still apply.
       Guide: https://github.com/vibead/cli
     EOS
@@ -61,8 +66,11 @@ class Vibead < Formula
 
   test do
     assert_equal version.to_s, shell_output("#{bin}/vibead --version").strip
-    assert_match "Vibead standalone beta", shell_output("#{bin}/vibead --help")
-    assert_match "--test-publisher", shell_output("#{bin}/vibead-beta --help")
+    help = shell_output("#{bin}/vibead --help")
+    assert_match "labelled [Ad]", help
+    assert_match "vibead uninstall", help
+    refute_match(/gemini|Vibead standalone beta/i, help)
+    refute_path_exists bin/"vibead-beta"
     assert_predicate libexec/"runtime/node", :executable?
     assert_path_exists libexec/"runtime/renderer.node"
     system libexec/"runtime/node", "-e", "require(process.argv[1]); require(process.argv[2])",
