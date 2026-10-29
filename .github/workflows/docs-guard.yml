@@ -1,7 +1,7 @@
 name: Shipped docs guard
 
 # beta.36 RC2: fails if an unapproved-wording marker (PENDING NINA, PENDING, TODO(nina))
-# is in any shipped file. Separate from Formula check so it stays readable while that
+# is in any shipped file; RC3: or a Windows install pointer. Separate from Formula check so it stays readable while that
 # check is red by design. Offline, no secrets.
 on:
   pull_request:
@@ -21,3 +21,7 @@ jobs:
           persist-credentials: false
       - name: No PENDING NINA, PENDING or TODO(nina) marker in shipped files
         run: scripts/check-no-pending.sh
+      # beta.36 RC3 (W1): no Windows install pointer (irm, iex, iwr, Invoke-*, .ps1 URL,
+      # winget/scoop/choco) in any shipped file or README, any case.
+      - name: No Windows install pointer in shipped files
+        run: scripts/check-no-windows.sh
