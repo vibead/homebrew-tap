@@ -18,6 +18,15 @@ version=${VIBEAD_TAP_VERSION:-$(npm view "$pkg" dist-tags.latest)}
 old=$(sed -nE 's/^  version "([^"]+)"$/\1/p' "$f")
 [ -n "$old" ] || { echo "no version line in $f" >&2; exit 1; }
 if [ "$old" = "$version" ]; then echo "tap already at $version"; exit 0; fi
+# Forward only (Nina, 22:06 Oct 29 2026): never roll the formula back past the
+# version it already ships, prerelease included (beta.N), even if npm `latest`
+# moves back. A scheduled run then changes nothing; a pinned older version fails.
+# shellcheck source=scripts/semver.sh
+. "$(dirname "$0")/semver.sh"
+if [ "$(semver_cmp "$version" "$old")" != 1 ]; then
+  if [ -n "${VIBEAD_TAP_VERSION:-}" ]; then echo "refusing to move the tap back from $old to $version" >&2; exit 1; fi
+  echo "tap stays at $old: npm latest $version is not newer"; exit 0
+fi
 
 tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
 have=$(npm view "$pkg@$version" dist.integrity)
