@@ -1,0 +1,30 @@
+name: Shipped docs guard
+
+# beta.36 RC2: fails if an unapproved-wording marker (PENDING NINA, PENDING, TODO(nina))
+# is in any shipped file; RC3: or a Windows install pointer, or a caveat without the approved Codex sentence. Separate from Formula check so it stays readable while that
+# check is red by design. Offline, no secrets.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  markers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: No PENDING NINA, PENDING or TODO(nina) marker in shipped files
+        run: scripts/check-no-pending.sh
+      # beta.36 RC3 (W1): no Windows install pointer (the forms are listed in
+      # scripts/check-no-windows.sh) in any tracked text file, any case.
+      - name: No Windows install pointer in shipped files
+        run: scripts/check-no-windows.sh
+      # beta.36 RC3 QA: the caveat carries the approved Codex sentence byte-exact.
+      - name: Formula caveat carries the approved Codex sentence
+        run: scripts/check-caveat.sh
