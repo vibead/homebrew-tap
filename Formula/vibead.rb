@@ -48,11 +48,12 @@ class Vibead < Formula
 
   def caveats
     <<~EOS
-      Run vibead once to connect Claude Code, Codex and OpenCode:
-        vibead
-      It prints what it changed. Then start your agent as usual.
-      Codex: open a new terminal.
-      Codex asks you to trust VibeAd's hooks; ads show after you choose Trust. It asks again each time you turn VibeAd off and back on.
+      Run `vibead` once after installing or upgrading. It connects Claude
+      Code, Codex and OpenCode when they are installed, and prints what it
+      did. Then start your agent as usual: `claude`, `codex` or `opencode`.
+      Open a new terminal first for Codex: it gets a `codex` shell function
+      that runs `vibead codex`.
+      Codex will ask you to review VibeAd's hooks ("Hooks need review"). Choose "Trust all and continue" to see ads; "Continue without trusting" runs Codex normally without ads. It asks again each time you turn VibeAd off and back on.
 
       VibeAd shows a short sponsored line, labelled [Ad], in the agent's
       status line, working indicator or notification area while it works.
