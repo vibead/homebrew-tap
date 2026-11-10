@@ -5,7 +5,7 @@
 # this script. Offline, no secrets.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-approved="Codex asks you to trust VibeAd's hooks; ads show after you choose Trust. It asks again each time you turn VibeAd off and back on."
+approved="Codex will ask you to review VibeAd's hooks (\"Hooks need review\"). Choose \"Trust all and continue\" to see ads; \"Continue without trusting\" runs Codex normally without ads. It asks again each time you turn VibeAd off and back on."
 [ "$(grep -cxF "      $approved" Formula/vibead.rb)" = 1 ] || { echo "caveat: Formula/vibead.rb must carry the approved Codex sentence once, byte-exact"; exit 1; }
 # RC3b (CLI Tester survivor 7): the caveat layout around it is pinned too: one blank line, then
 # the [Ad] paragraph (no extra blank line or text slipped in after the sentence).

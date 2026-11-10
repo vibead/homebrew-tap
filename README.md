@@ -16,7 +16,7 @@ claude                                            # or codex, opencode: use your
 vibead disable                                    # turn ads off and restore your settings
 ```
 
-**Codex** gets a `codex` shell function that runs `vibead codex`; `vibead disable` removes it. Open a new terminal after the first `vibead` run. Codex asks you to trust VibeAd's hooks; ads show after you choose Trust. It asks again each time you turn VibeAd off and back on.
+**Codex** gets a `codex` shell function that runs `vibead codex`; `vibead disable` removes it. Open a new terminal after the first `vibead` run. Codex will ask you to review VibeAd's hooks ("Hooks need review"). Choose "Trust all and continue" to see ads; "Continue without trusting" runs Codex normally without ads. It asks again each time you turn VibeAd off and back on.
 
 VibeAd never reads or changes your prompts, code or agent output.
 
