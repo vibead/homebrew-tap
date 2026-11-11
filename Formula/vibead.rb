@@ -62,6 +62,7 @@ class Vibead < Formula
       Remove it with: vibead uninstall && brew uninstall vibead
       Your normal AI provider charges still apply.
       Guide: https://github.com/vibead/cli
+      Account: signed out. Ads still show, but you're not earning. Run `vibead login`.
     EOS
   end
 
