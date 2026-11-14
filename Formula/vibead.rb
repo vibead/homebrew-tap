@@ -1,8 +1,8 @@
 class Vibead < Formula
   desc "Clearly labelled sponsored lines while your AI agent works"
   homepage "https://github.com/vibead/cli"
-  version "0.1.0-beta.45"
-  # caveats-for: 0.1.0-beta.45
+  version "0.1.0-beta.46"
+  # caveats-for: 0.1.0-beta.46
   # The caveats and brew test below were written for that version. update-formula.sh
   # never moves the formula past it, and the "Formula check" workflow stays red until
   # the formula ships it: change the caveats in a reviewed tap PR, then this line.
@@ -10,20 +10,20 @@ class Vibead < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.45/vibead-beta-0.1.0-beta.45-darwin-arm64.tar.gz"
-      sha256 "54ac016cbab3e3a43d75f41c050fdd63df1bc5c2cf673aa6a3f83ed5d070e73b"
+      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.46/vibead-beta-0.1.0-beta.46-darwin-arm64.tar.gz"
+      sha256 "677b84fda47916bc7664cb67b089e5355ad73a3643ca6937e854b0a0d005fbab"
     end
     on_intel do
-      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.45/vibead-beta-0.1.0-beta.45-darwin-x64.tar.gz"
-      sha256 "d0618779b9e82f3ae102fa7ec5b586bf24411f2104c017712ed2b02a0f35d043"
+      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.46/vibead-beta-0.1.0-beta.46-darwin-x64.tar.gz"
+      sha256 "a53dd195a64355f461a46d61fb8e73e6e27561ae85989141586508874cec7b03"
     end
   end
 
   on_linux do
     depends_on arch: :x86_64
     on_intel do
-      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.45/vibead-beta-0.1.0-beta.45-linux-x64.tar.gz"
-      sha256 "61df2c3962386578c8235f6b7daf2e3d1b078079c67a07d0e159524a8af03718"
+      url "https://github.com/vibead/cli/releases/download/v0.1.0-beta.46/vibead-beta-0.1.0-beta.46-linux-x64.tar.gz"
+      sha256 "f35d6c47974e25748d284568e27236948f6495dc0b9bebf483da6baf67fcdb87"
     end
   end
 
